@@ -1,0 +1,19 @@
+.spacer {
+  flex: 1 1 auto;
+}
+
+mat-toolbar {
+  display: flex;
+}
+
+.home_nav {
+  padding: 5px;
+  margin-left: 16px; 
+  cursor: pointer;  
+  font-size: medium;
+}
+
+mat-toolbar {
+  background-color: #d0286b;
+  color: white;
+}
