@@ -3,25 +3,27 @@
   position: relative;
   margin: auto;
   overflow: hidden;
-  height: 400px; 
+  height: 500px;
 }
 
 .mySlide {
-  display: none;
   position: absolute;
   width: 100%;
   height: 100%;
-  transition: opacity 1s ease-in-out;
   opacity: 0;
+  transition: opacity 1s ease-in-out;
+  z-index: 0;
 }
 
+
 .mySlide.active {
-  display: block;
   opacity: 1;
+  z-index: 1;
 }
 
 .mySlide img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }

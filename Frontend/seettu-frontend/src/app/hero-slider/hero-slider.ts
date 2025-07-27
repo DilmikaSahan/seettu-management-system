@@ -9,6 +9,10 @@ import { CommonModule } from '@angular/common';
 })
 export class HeroSlider implements OnInit,OnDestroy {
   images =[
+    "hero01.jpg",
+    "hero02.jpg",
+    "hero03.jpg",
+    "hero04.jpg"
 
   ];
   currentIndex=0;

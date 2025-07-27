@@ -1,5 +1,9 @@
 <div class="slideshow-container"> 
-    <div *ngFor="let image of images; let i = index" class="mySlide fade">
+  <div
+    *ngFor="let image of images; let i = index"
+    class="mySlide"
+    [class.active]="i === currentIndex"
+  >
     <img [src]="image" alt="Slide {{ i + 1 }}" />
-    </div>
+  </div>
 </div>
