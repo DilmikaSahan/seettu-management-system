@@ -83,6 +83,64 @@ h1{
   line-height: 1.5;
 }
 
+
+.seettu-features-section {
+  text-align: center;
+  padding: 60px 20px;
+  background-color: #f9f9f9;
+}
+
+.seettu-features-section h2 {
+  font-size: 2rem;
+  margin-bottom: 40px;
+  font-weight: 600;
+}
+
+.features-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+}
+
+.feature-item {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  width: 180px;
+  text-align: center;
+}
+
+.feature-item .icon {
+  height: 40px;
+  margin-bottom: 10px;
+  /* icon styles here */
+}
+
+.feature-item h3 {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.card-side {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-side:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+.feature-item{
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+.feature-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
 @keyframes appear{
   from{
     opacity: 0.8;
