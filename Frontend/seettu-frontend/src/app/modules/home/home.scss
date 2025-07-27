@@ -17,3 +17,84 @@ mat-toolbar {
   background-color: #d0286b;
   color: white;
 }
+h1{
+  padding-top: 20px;
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+}
+.description-H{
+  text-align: center;
+  font-size: 18px;
+  color: #333;
+}
+.example-card {
+  max-width: 400px;
+}
+
+.example-header-image-left {
+  background-image: url('../../../../public/business\ girl.jpg');
+  background-size: cover;
+}
+.example-header-image-right {
+  background-image: url('../../../../public/customer.jpg');
+  background-size: cover;
+}
+.card-left {
+  padding-top:  50px; ;
+  margin-left: 200px;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  height: 100%;
+}
+
+.card-right{
+  padding-top: 50px;
+  margin-right: 200px;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  height: 100%;
+}
+
+.card-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px 0;
+  gap: 40px;
+}
+
+.card-side {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.v-line {
+  width: 6px;
+  height: 100%;
+  background-color: green;
+  border-radius: 3px;
+}
+.card-container p{
+  font-size: 14px;
+  color: #555;
+  line-height: 1.5;
+}
+
+@keyframes appear{
+  from{
+    opacity: 0.8;
+    scale: 0.8 ;
+  }
+  to{
+    opacity: 1;
+    scale: 1;
+  }
+}
+.block{
+  animation: appear linear;
+  animation-timeline: view();
+  animation-range: enter 0% cover 40%;
+}
