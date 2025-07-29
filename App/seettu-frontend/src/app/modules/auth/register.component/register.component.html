@@ -1,0 +1,32 @@
+<div class="register-container">
+  <h2>Register</h2>
+  <form>
+
+    <!-- Full Name -->
+    <mat-form-field appearance="fill">
+      <mat-label>Full Name</mat-label>
+      <input matInput type="text" required>
+    </mat-form-field>
+
+    <!-- Email -->
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" required>
+    </mat-form-field>
+
+    <!-- Password -->
+    <mat-form-field appearance="fill">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" required>
+    </mat-form-field>
+
+    <!-- Role Selection -->
+    <label style="margin-top: 10px; font-weight: 500;">Select Role:</label>
+    <mat-radio-group style="display: block; margin-top: 10px;">
+      <mat-radio-button value="provider">Seettu Provider</mat-radio-button>
+      <mat-radio-button value="subscriber" style="margin-left: 20px;">Seettu Subscriber</mat-radio-button>
+    </mat-radio-group>
+
+    <button mat-raised-button color="primary" style="margin-top: 20px;">Register</button>
+  </form>
+</div>
