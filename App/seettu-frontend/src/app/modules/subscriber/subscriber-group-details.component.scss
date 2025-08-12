@@ -1,0 +1,376 @@
+.group-details-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.header {
+  margin-bottom: 30px;
+}
+
+.btn-back {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  margin-bottom: 10px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 2px 4px rgba(0, 123, 255, 0.2);
+}
+
+.btn-back:hover {
+  background-color: #0056b3;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+  text-decoration: none;
+}
+
+h1 {
+  color: #333;
+  margin: 0;
+  font-size: 28px;
+}
+
+h2 {
+  color: #555;
+  margin: 0 0 20px 0;
+  font-size: 20px;
+}
+
+/* Cards */
+.info-card, .summary-card, .progress-card, .payments-card, .warnings-card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  margin-bottom: 25px;
+  padding: 25px;
+}
+
+/* Info Grid */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 0;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  overflow: hidden;
+  background: white;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  border-right: 1px solid #dee2e6;
+  border-bottom: 1px solid #dee2e6;
+  background: white;
+  transition: background-color 0.2s ease;
+  min-height: 60px;
+}
+
+.info-item:hover {
+  background-color: #f8f9fa;
+}
+
+.info-item:last-child {
+  border-right: none;
+}
+
+.info-item:nth-last-child(-n+2) {
+  border-bottom: none;
+}
+
+/* Handle odd number of items in last row */
+.info-grid:has(.info-item:nth-child(odd):last-child) .info-item:last-child {
+  border-bottom: none;
+}
+
+.info-item label {
+  font-weight: 600;
+  color: #666;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.info-item span {
+  color: #333;
+  font-weight: 500;
+  text-align: right;
+}
+
+/* Status badges */
+.status.started {
+  color: #28a745;
+  font-weight: bold;
+}
+
+.status.pending {
+  color: #ffc107;
+  font-weight: bold;
+}
+
+.package-status.received {
+  color: #28a745;
+  font-weight: bold;
+}
+
+.package-status.pending {
+  color: #6c757d;
+  font-weight: bold;
+}
+
+/* Summary Grid */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.summary-item {
+  text-align: center;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+}
+
+.summary-item.overdue {
+  background-color: #fee;
+  border: 2px solid #dc3545;
+}
+
+.summary-number {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.summary-item.overdue .summary-number {
+  color: #dc3545;
+}
+
+.summary-label {
+  font-size: 14px;
+  color: #666;
+}
+
+/* Progress */
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.progress-percentage {
+  font-weight: bold;
+  color: #007bff;
+}
+
+.progress-bar {
+  height: 20px;
+  background-color: #e9ecef;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #007bff, #0056b3);
+  transition: width 0.3s ease;
+}
+
+/* Payment Table */
+.table-container {
+  overflow-x: auto;
+}
+
+.payments-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.payments-table th,
+.payments-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.payments-table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #555;
+}
+
+/* Payment row styles */
+.payments-table tr.status-paid {
+  background-color: #f8fff8;
+}
+
+.payments-table tr.status-overdue {
+  background-color: #fff5f5;
+}
+
+.payments-table tr.status-pending {
+  background-color: #fffef5;
+}
+
+.payments-table tr.current-month {
+  border-left: 4px solid #007bff;
+  background-color: #f0f8ff;
+}
+
+/* Status badges in table */
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.status-badge.status-paid {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.status-badge.status-overdue {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.status-badge.status-pending {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.month-number {
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.current-badge {
+  background-color: #007bff;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.warning-text {
+  font-size: 12px;
+  color: #dc3545;
+  margin-top: 4px;
+  font-style: italic;
+}
+
+.not-paid {
+  color: #6c757d;
+  font-style: italic;
+}
+
+/* Warnings */
+.warnings-card {
+  border-left: 4px solid #dc3545;
+}
+
+.overdue-warning {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  border: 1px solid #f5c6cb;
+}
+
+/* Loading and Error states */
+.loading-container, .error-container {
+  text-align: center;
+  padding: 50px;
+}
+
+.loading-spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #007bff;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .group-details-container {
+    padding: 15px;
+  }
+  
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .info-item {
+    border-right: none !important;
+    border-bottom: 1px solid #dee2e6 !important;
+  }
+
+  .info-item:last-child {
+    border-bottom: none !important;
+  }
+  
+  .summary-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .progress-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .payments-table {
+    font-size: 14px;
+  }
+  
+  .payments-table th,
+  .payments-table td {
+    padding: 8px;
+  }
+}

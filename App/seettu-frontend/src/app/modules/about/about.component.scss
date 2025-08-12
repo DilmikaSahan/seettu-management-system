@@ -1,0 +1,343 @@
+.about-container {
+  min-height: 100vh;
+  font-family: 'Roboto', sans-serif;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+// Header styling
+.about-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.page-title {
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin-left: 16px;
+}
+
+.back-button {
+  margin-right: 8px;
+}
+
+// Hero section
+.hero-section {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.hero-description {
+  font-size: 1.2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.6;
+  opacity: 0.95;
+}
+
+// Main content
+.main-content {
+  background-color: #f8f9fa;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+// What is Seettu section
+.what-is-seettu {
+  padding: 60px 0;
+  background: white;
+}
+
+.what-is-seettu h2 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 40px;
+  color: #333;
+}
+
+.what-is-seettu p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #555;
+  margin-bottom: 20px;
+  text-align: center;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// Roles section
+.roles-section {
+  padding: 80px 0;
+  background: #f8f9fa;
+}
+
+.roles-section h2 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 60px;
+  color: #333;
+}
+
+.roles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+  gap: 40px;
+  margin-top: 40px;
+}
+
+// Role cards
+.role-card {
+  border: none !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
+  border-radius: 16px !important;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.role-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15) !important;
+}
+
+.provider-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.subscriber-card {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+}
+
+// Card avatars
+.provider-avatar {
+  background: rgba(255, 255, 255, 0.2) !important;
+  color: white !important;
+}
+
+.subscriber-avatar {
+  background: rgba(255, 255, 255, 0.2) !important;
+  color: white !important;
+}
+
+// Card content
+mat-card-header {
+  padding: 24px 24px 16px 24px !important;
+}
+
+mat-card-content {
+  padding: 0 24px 16px 24px !important;
+}
+
+mat-card-title {
+  color: white !important;
+  font-size: 1.5rem !important;
+  font-weight: 600 !important;
+}
+
+mat-card-subtitle {
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-size: 1rem !important;
+}
+
+.role-card p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.role-card h4 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 20px 0 12px 0;
+  color: white;
+}
+
+// Lists
+.feature-list, .benefit-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+}
+
+.feature-list li, .benefit-list li {
+  padding: 6px 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.feature-list li {
+  padding-left: 0;
+}
+
+.benefit-list li {
+  padding-left: 0;
+}
+
+// Card actions
+mat-card-actions {
+  padding: 16px 24px 24px 24px !important;
+  background: rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+mat-card-actions button {
+  background: white !important;
+  color: #333 !important;
+  font-weight: 600 !important;
+  border-radius: 25px !important;
+  padding: 0 24px !important;
+  height: 40px !important;
+}
+
+// Features section
+.features-section {
+  padding: 80px 0;
+  background: white;
+}
+
+.features-section h2 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 60px;
+  color: #333;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 40px;
+}
+
+.feature-item {
+  text-align: center;
+  padding: 40px 20px;
+  background: #f8f9fa;
+  border-radius: 16px;
+  transition: transform 0.3s ease;
+}
+
+.feature-item:hover {
+  transform: translateY(-4px);
+}
+
+.feature-icon {
+  font-size: 3rem !important;
+  width: 3rem !important;
+  height: 3rem !important;
+  color: #667eea;
+  margin-bottom: 20px;
+}
+
+.feature-item h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #333;
+}
+
+.feature-item p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #555;
+}
+
+// Getting started section
+.getting-started {
+  padding: 80px 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  text-align: center;
+}
+
+.getting-started h2 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.getting-started p {
+  font-size: 1.2rem;
+  margin-bottom: 40px;
+  opacity: 0.95;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cta-button {
+  padding: 0 32px !important;
+  height: 48px !important;
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+  border-radius: 25px !important;
+  min-width: 200px;
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+
+  .hero-description {
+    font-size: 1rem;
+  }
+
+  .roles-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .cta-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cta-button {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .container {
+    padding: 0 16px;
+  }
+
+  .roles-section h2,
+  .features-section h2,
+  .getting-started h2 {
+    font-size: 2rem;
+  }
+}

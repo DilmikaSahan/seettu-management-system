@@ -1,0 +1,77 @@
+<div class="subscriber-dashboard">
+  <div class="dashboard-header">
+    <h1>My Seettu Dashboard</h1>
+    <div class="notification-badge" *ngIf="unreadCount > 0" (click)="loadAllNotifications()">
+      {{ unreadCount }} new notification{{ unreadCount > 1 ? 's' : '' }}
+    </div>
+  </div>
+
+
+  <!-- My Groups Section -->
+  <div class="section">
+    <h2>My Seettu Groups</h2>
+    <div class="groups-list" *ngIf="myGroups.length > 0; else noGroups">
+      <div class="group-card" *ngFor="let group of myGroups">
+        <div class="group-header">
+          <h3>{{ group.groupName }}</h3>
+          <span [class]="'status ' + (group.isStarted ? 'started' : 'pending')">
+            {{ group.isStarted ? 'Active' : 'Pending' }}
+          </span>
+        </div>
+        
+        <div class="group-details">
+          <div class="detail-item">
+            <label>Package:</label>
+            <span>{{ group.seettuPackage?.packageName }}</span>
+          </div>
+          <div class="detail-item">
+            <label>Monthly Amount:</label>
+            <span>LKR {{ group.monthlyAmount }}</span>
+          </div>
+          <div class="detail-item">
+            <label>Duration:</label>
+            <span>{{ group.numberOfMonths }} months</span>
+          </div>
+          <div class="detail-item">
+            <label>Start Date:</label>
+            <span>{{ group.startDate | date }}</span>
+          </div>
+          <div class="detail-item" *ngIf="getMemberInfo(group)">
+            <label>My Turn:</label>
+            <span>Month {{ getMemberInfo(group)?.orderNumber }}</span>
+          </div>
+          <div class="detail-item" *ngIf="getMemberInfo(group)">
+            <label>Package Date:</label>
+            <span>{{ getMemberInfo(group)?.packageReceiveDate | date }}</span>
+          </div>
+        </div>
+
+        <div class="group-progress" *ngIf="group.isStarted">
+          <div class="progress-info">
+            <span>Progress: Month {{ getCurrentMonth(group) }} of {{ group.numberOfMonths }}</span>
+          </div>
+          <div class="progress-bar">
+            <div 
+              class="progress-fill" 
+              [style.width.%]="getProgressPercentage(group)"
+            ></div>
+          </div>
+        </div>
+
+        <div class="group-actions">
+          <button class="btn btn-primary" (click)="viewGroupDetails(group.id!)" *ngIf="group.id">
+            View Details & Payments
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <ng-template #noGroups>
+      <div class="no-groups">
+        <p>You are not part of any seettu groups yet.</p>
+        <p>Contact a provider to join a group.</p>
+      </div>
+    </ng-template>
+  </div>
+</div>
+

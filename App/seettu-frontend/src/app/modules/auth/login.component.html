@@ -2,8 +2,8 @@
   <h2>Login</h2>
   <form (ngSubmit)="login()">
     <div>
-      <label for="username">Username:</label>
-      <input type="text" [(ngModel)]="username" name="username" required>
+      <label for="email">Email:</label>
+      <input type="email" [(ngModel)]="email" name="email" required>
     </div>
 
     <div>
@@ -19,4 +19,5 @@
   </form>
     <div class="register-link">
         <p>Don't have an account? <a routerLink="/register">Register here</a></p>
+    </div>
 </div>

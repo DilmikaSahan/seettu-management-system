@@ -1,0 +1,95 @@
+<div class="group-details-container" *ngIf="groupDetails">
+  <div class="group-header">
+    <div class="header-info">
+      <h1>{{ groupDetails.groupName }}</h1>
+      <div class="group-meta">
+        <span class="meta-item">Package: {{ groupDetails.packageName }}</span>
+        <span class="meta-item">Monthly Amount: LKR {{ groupDetails.monthlyAmount }}</span>
+        <span class="meta-item">Duration: {{ groupDetails.numberOfMonths }} months</span>
+        <span class="meta-item">Start Date: {{ groupDetails.startDate | date }}</span>
+        <span [class]="'status ' + (groupDetails.isStarted ? 'started' : 'pending')">
+          {{ groupDetails.isStarted ? 'Started' : 'Pending' }}
+        </span>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button 
+        class="btn btn-success"
+        *ngIf="!groupDetails.isStarted"
+        (click)="startGroup()"
+      >
+        Start Group
+      </button>
+      <button class="btn btn-secondary" (click)="goBack()">
+        Back to Dashboard
+      </button>
+    </div>
+  </div>
+
+  <!-- Members Overview -->
+  <div class="section">
+    <h2>Members ({{ groupDetails.members.length }})</h2>
+    <div class="members-grid">
+      <div class="member-card" *ngFor="let member of groupDetails.members">
+        <div class="member-info">
+          <h3>{{ member.name }}</h3>
+          <p>Phone: {{ member.phoneNumber || 'Not provided' }}</p>
+          <p>Order: {{ member.orderNumber }}</p>
+          <p>Package Date: {{ member.packageReceiveDate | date }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Monthly Payment Tracking -->
+  <div class="section">
+    <h2>Payment Tracking</h2>
+    <div class="payment-months">
+      <div class="month-card" *ngFor="let month of groupDetails.monthlyPayments">
+        <div class="month-header">
+          <h3>Month {{ month.monthNumber }}</h3>
+          <p>Due Date: {{ month.paymentDate | date }}</p>
+          <div class="month-stats">
+            <span class="paid-count">
+              {{ getPaidCount(month.memberPayments) }}/{{ month.memberPayments.length }} Paid
+            </span>
+          </div>
+        </div>
+        
+        <div class="member-payments">
+          <div 
+            class="payment-item" 
+            *ngFor="let payment of month.memberPayments"
+            [class.paid]="payment.isPaid"
+          >
+            <div class="payment-info">
+              <strong>{{ payment.memberName }}</strong>
+              <span class="amount">LKR {{ groupDetails.monthlyAmount }}</span>
+            </div>
+            <div class="payment-status">
+              <span class="status-badge" [class.paid]="payment.isPaid">
+                {{ payment.isPaid ? 'Paid' : 'Pending' }}
+              </span>
+              <button 
+                class="btn btn-sm btn-success"
+                *ngIf="!payment.isPaid && groupDetails.isStarted"
+                (click)="markAsPaid(payment.paymentId!)"
+              >
+                Mark as Paid
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="loading" *ngIf="!groupDetails && !error">
+  Loading group details...
+</div>
+
+<div class="error" *ngIf="error">
+  <p>{{ error }}</p>
+  <button class="btn btn-primary" (click)="loadGroupDetails()">Retry</button>
+</div>

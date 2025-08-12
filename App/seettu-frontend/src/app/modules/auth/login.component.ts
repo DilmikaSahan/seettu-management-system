@@ -7,28 +7,34 @@ import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login.component',
-  imports: [FormsModule, NgIf,RouterLink, RouterModule],
+  imports: [FormsModule, NgIf, RouterLink, RouterModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
 
-  username : string = '';
-  password : string = '';
+  email: string = '';
+  password: string = '';
   errorMessage: string = '';
 
-  constructor(private authService: AuthService, private roter: Router){}
-  login(){
-    this.authService.login(this.username, this.password).subscribe({
-      next: (res) =>{
-        localStorage.setItem('token',res.token);
-        this.roter.navigate(['/']);
+  constructor(private authService: AuthService, private router: Router) {}
+
+  login() {
+    this.authService.login(this.email, this.password).subscribe({
+      next: (res) => {
+        // Redirect based on user role
+        if (res.role === 'PROVIDER') {
+          this.router.navigate(['/provider/dashboard']);
+        } else if (res.role === 'SUBSCRIBER') {
+          this.router.navigate(['/subscriber/dashboard']);
+        } else {
+          this.router.navigate(['/']);
+        }
       },
-      error: (err) =>{
-        this.errorMessage ='Invalid username or password';
+      error: (err) => {
+        this.errorMessage = 'Invalid email or password';
         console.error('Login error:', err);
       }
-    })
+    });
   }
-
 }

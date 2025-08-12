@@ -1,2 +1,6 @@
-package com.seettu.backend.entity;public class Role {
+package com.seettu.backend.entity;
+
+public enum Role {
+    PROVIDER,
+    SUBSCRIBER
 }

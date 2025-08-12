@@ -1,0 +1,202 @@
+<div class="about-container">
+  <!-- Header -->
+  <mat-toolbar color="primary" class="about-header">
+    <button mat-icon-button (click)="goBack()" class="back-button">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span class="page-title">About Seettu Potha</span>
+    <span class="spacer"></span>
+    <button mat-button (click)="navigateToHome()">Home</button>
+    <button mat-button (click)="navigateToLogin()">Login</button>
+    <button mat-raised-button color="accent" (click)="navigateToRegister()">Register</button>
+  </mat-toolbar>
+
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="hero-content">
+      <h1>About Seettu Potha</h1>
+      <p class="hero-description">
+        Empowering community savings through smart digital solutions. 
+        Seettu Potha revolutionizes traditional savings groups with modern technology, 
+        making financial cooperation easier, more transparent, and accessible to everyone.
+      </p>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    
+    <!-- What is Seettu Section -->
+    <section class="what-is-seettu">
+      <div class="container">
+        <h2>What is Seettu?</h2>
+        <p>
+          Seettu is a traditional rotating savings and credit association (ROSCA) where a group of people 
+          contribute a fixed amount regularly to a common fund. Each member takes turns receiving the 
+          total collection, helping them save money and access funds when needed.
+        </p>
+        <p>
+          Seettu Potha brings this age-old practice into the digital era, making it more organized, 
+          transparent, and secure for modern communities.
+        </p>
+      </div>
+    </section>
+
+    <!-- Provider and Subscriber Details -->
+    <section class="roles-section">
+      <div class="container">
+        <h2>How Seettu Potha Works</h2>
+        
+        <div class="roles-grid">
+          <!-- Provider Card -->
+          <mat-card class="role-card provider-card">
+            <mat-card-header>
+              <div mat-card-avatar class="provider-avatar">
+                <mat-icon>business</mat-icon>
+              </div>
+              <mat-card-title>For Seettu Providers</mat-card-title>
+              <mat-card-subtitle>Organize and manage savings groups</mat-card-subtitle>
+            </mat-card-header>
+            
+            <mat-card-content>
+              <p>As a Seettu Provider, you can create and manage multiple savings groups with complete control and transparency.</p>
+              
+              <h4>Key Features:</h4>
+              <ul class="feature-list">
+                <li>✓ Create multiple Seettu groups with different terms</li>
+                <li>✓ Set monthly contribution amounts and duration</li>
+                <li>✓ Add and manage group members easily</li>
+                <li>✓ Track all payments and contributions automatically</li>
+                <li>✓ Generate detailed financial reports</li>
+                <li>✓ Send automated payment reminders</li>
+                <li>✓ Manage payout schedules and member turns</li>
+                <li>✓ Maintain complete transaction history</li>
+                <li>✓ Secure member data management</li>
+              </ul>
+
+              <h4>Benefits:</h4>
+              <ul class="benefit-list">
+                <li>• Earn trust and build stronger community relationships</li>
+                <li>• Reduce administrative workload with automation</li>
+                <li>• Ensure transparency and accountability</li>
+                <li>• Access detailed analytics and insights</li>
+                <li>• Scale your savings group operations</li>
+              </ul>
+            </mat-card-content>
+            
+            <mat-card-actions>
+              <button mat-raised-button color="primary" (click)="navigateToRegister('PROVIDER')">
+                Become a Provider
+              </button>
+            </mat-card-actions>
+          </mat-card>
+
+          <!-- Subscriber Card -->
+          <mat-card class="role-card subscriber-card">
+            <mat-card-header>
+              <div mat-card-avatar class="subscriber-avatar">
+                <mat-icon>people</mat-icon>
+              </div>
+              <mat-card-title>For Subscribers</mat-card-title>
+              <mat-card-subtitle>Join savings groups and build your future</mat-card-subtitle>
+            </mat-card-header>
+            
+            <mat-card-content>
+              <p>As a Subscriber, join trusted Seettu groups and achieve your savings goals with community support.</p>
+              
+              <h4>Key Features:</h4>
+              <ul class="feature-list">
+                <li>✓ Join multiple Seettu groups based on your capacity</li>
+                <li>✓ View your payment schedule and upcoming contributions</li>
+                <li>✓ Track your savings progress and payout timeline</li>
+                <li>✓ Receive payment reminders and notifications</li>
+                <li>✓ Access your complete payment history</li>
+                <li>✓ View group member information and status</li>
+                <li>✓ Monitor group financial health</li>
+                <li>✓ Secure and private profile management</li>
+                <li>✓ Mobile-friendly dashboard access</li>
+              </ul>
+
+              <h4>Benefits:</h4>
+              <ul class="benefit-list">
+                <li>• Build disciplined saving habits</li>
+                <li>• Access funds when you need them most</li>
+                <li>• Join a supportive financial community</li>
+                <li>• Transparent tracking of all transactions</li>
+                <li>• Flexible participation in multiple groups</li>
+              </ul>
+            </mat-card-content>
+            
+            <mat-card-actions>
+              <button mat-raised-button color="primary" (click)="navigateToRegister('SUBSCRIBER')">
+                Join as Subscriber
+              </button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+      <div class="container">
+        <h2>Why Choose Seettu Potha?</h2>
+        
+        <div class="features-grid">
+          <div class="feature-item">
+            <mat-icon class="feature-icon">security</mat-icon>
+            <h3>Trustworthy</h3>
+            <p>Built with robust security measures and transparent operations to ensure your money is always safe.</p>
+          </div>
+          
+          <div class="feature-item">
+            <mat-icon class="feature-icon">visibility</mat-icon>
+            <h3>Transparent</h3>
+            <p>Complete visibility into all transactions, member activities, and group financial status.</p>
+          </div>
+          
+          <div class="feature-item">
+            <mat-icon class="feature-icon">precision_manufacturing</mat-icon>
+            <h3>Accurate</h3>
+            <p>Automated calculations and record-keeping eliminate errors and ensure precise financial tracking.</p>
+          </div>
+          
+          <div class="feature-item">
+            <mat-icon class="feature-icon">phone_android</mat-icon>
+            <h3>Mobile-Friendly</h3>
+            <p>Access your Seettu groups anytime, anywhere with our responsive web application.</p>
+          </div>
+          
+          <div class="feature-item">
+            <mat-icon class="feature-icon">group</mat-icon>
+            <h3>Community-Driven</h3>
+            <p>Foster stronger relationships and financial cooperation within your community.</p>
+          </div>
+          
+          <div class="feature-item">
+            <mat-icon class="feature-icon">trending_up</mat-icon>
+            <h3>Growth-Oriented</h3>
+            <p>Help members achieve their financial goals through disciplined saving and community support.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Getting Started Section -->
+    <section class="getting-started">
+      <div class="container">
+        <h2>Ready to Get Started?</h2>
+        <p>Join thousands of people who are already building their financial future with Seettu Potha.</p>
+        
+        <div class="cta-buttons">
+          <button mat-raised-button color="primary" class="cta-button" (click)="navigateToRegister('PROVIDER')">
+            Start as Provider
+          </button>
+          <button mat-raised-button color="accent" class="cta-button" (click)="navigateToRegister('SUBSCRIBER')">
+            Join as Subscriber
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

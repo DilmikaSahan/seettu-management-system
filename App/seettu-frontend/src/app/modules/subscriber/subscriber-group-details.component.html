@@ -1,0 +1,157 @@
+<div class="group-details-container" *ngIf="!loading && groupDetails">
+  <!-- Header -->
+  <div class="header">
+    <button class="btn btn-back" (click)="goBack()">
+      ← Back to Dashboard
+    </button>
+    <h1>{{ groupDetails.groupName }}</h1>
+  </div>
+
+  <!-- Group Information Card -->
+  <div class="info-card">
+    <h2>Group Information</h2>
+    <div class="info-grid">
+      <div class="info-item">
+        <label>Package:</label>
+        <span>{{ groupDetails.packageName }}</span>
+      </div>
+      <div class="info-item">
+        <label>Monthly Amount:</label>
+        <span>LKR {{ groupDetails.monthlyAmount }}</span>
+      </div>
+      <div class="info-item">
+        <label>Duration:</label>
+        <span>{{ groupDetails.numberOfMonths }} months</span>
+      </div>
+      <div class="info-item">
+        <label>Start Date:</label>
+        <span>{{ groupDetails.startDate | date }}</span>
+      </div>
+      <div class="info-item">
+        <label>Status:</label>
+        <span [class]="'status ' + (groupDetails.isStarted ? 'started' : 'pending')">
+          {{ groupDetails.isStarted ? 'Active' : 'Pending' }}
+        </span>
+      </div>
+      <div class="info-item">
+        <label>My Turn:</label>
+        <span>Month {{ groupDetails.myOrderNumber }}</span>
+      </div>
+      <div class="info-item">
+        <label>My Package Date:</label>
+        <span>{{ groupDetails.myPackageReceiveDate | date }}</span>
+      </div>
+      <div class="info-item">
+        <label>Package Status:</label>
+        <span [class]="'package-status ' + (groupDetails.hasReceivedPackage ? 'received' : 'pending')">
+          {{ groupDetails.hasReceivedPackage ? 'Received' : 'Pending' }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Payment Summary Card -->
+  <div class="summary-card">
+    <h2>Payment Summary</h2>
+    <div class="summary-grid">
+      <div class="summary-item">
+        <div class="summary-number">{{ groupDetails.totalPaidMonths }}</div>
+        <div class="summary-label">Months Paid</div>
+      </div>
+      <div class="summary-item overdue" *ngIf="groupDetails.totalOverdueMonths > 0">
+        <div class="summary-number">{{ groupDetails.totalOverdueMonths }}</div>
+        <div class="summary-label">Overdue Months</div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-number">LKR {{ groupDetails.totalPaidAmount }}</div>
+        <div class="summary-label">Total Paid</div>
+      </div>
+      <div class="summary-item" *ngIf="groupDetails.totalOwedAmount > 0">
+        <div class="summary-number">LKR {{ groupDetails.totalOwedAmount }}</div>
+        <div class="summary-label">Amount Owed</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Progress Card -->
+  <div class="progress-card" *ngIf="groupDetails.isStarted">
+    <h2>Group Progress</h2>
+    <div class="progress-info">
+      <span>Month {{ groupDetails.currentMonth }} of {{ groupDetails.numberOfMonths }}</span>
+      <span class="progress-percentage">{{ groupDetails.progressPercentage | number:'1.0-0' }}%</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" [style.width.%]="groupDetails.progressPercentage"></div>
+    </div>
+  </div>
+
+  <!-- Payment History Table -->
+  <div class="payments-card">
+    <h2>Payment History</h2>
+    <div class="table-container">
+      <table class="payments-table">
+        <thead>
+          <tr>
+            <th>Month</th>
+            <th>Payment Date</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Paid Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr 
+            *ngFor="let payment of groupDetails.payments" 
+            [class]="getPaymentStatusClass(payment)"
+            [class.current-month]="isCurrentMonth(payment)"
+          >
+            <td>
+              <span class="month-number">{{ payment.monthNumber }}</span>
+              <span *ngIf="isCurrentMonth(payment)" class="current-badge">Current</span>
+            </td>
+            <td>{{ payment.paymentDate | date }}</td>
+            <td>LKR {{ payment.amount }}</td>
+            <td>
+              <span [class]="'status-badge ' + getPaymentStatusClass(payment)">
+                {{ getStatusText(payment) }}
+              </span>
+              <div *ngIf="payment.status === 'OVERDUE'" class="warning-text">
+                ⚠️ Payment overdue! Please contact your provider.
+              </div>
+            </td>
+            <td>
+              <span *ngIf="payment.paidAt">{{ payment.paidAt | date:'short' }}</span>
+              <span *ngIf="!payment.paidAt" class="not-paid">-</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Warnings Section -->
+  <div class="warnings-card" *ngIf="groupDetails.totalOverdueMonths > 0">
+    <h2>⚠️ Payment Warnings</h2>
+    <div class="warning-list">
+      <div class="warning-item" *ngFor="let payment of groupDetails.payments">
+        <div *ngIf="payment.status === 'OVERDUE'" class="overdue-warning">
+          <strong>Month {{ payment.monthNumber }}</strong> payment is overdue! 
+          Due date was {{ payment.paymentDate | date }}.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Loading State -->
+<div class="loading-container" *ngIf="loading">
+  <div class="loading-spinner"></div>
+  <p>Loading group details...</p>
+</div>
+
+<!-- Error State -->
+<div class="error-container" *ngIf="error">
+  <h2>Error</h2>
+  <p>{{ error }}</p>
+  <button class="btn btn-primary" (click)="goBack()">Go Back</button>
+</div>

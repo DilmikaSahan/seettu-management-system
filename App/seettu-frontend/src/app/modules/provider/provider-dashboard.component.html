@@ -1,0 +1,110 @@
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h1>Provider Dashboard</h1>
+    <div class="stats-cards">
+      <div class="stat-card">
+        <h3>{{ totalGroups }}</h3>
+        <p>Total Groups</p>
+      </div>
+      <div class="stat-card">
+        <h3>{{ activeGroups }}</h3>
+        <p>Active Groups</p>
+      </div>
+      <div class="stat-card">
+        <h3>{{ totalPackages }}</h3>
+        <p>Total Packages</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="dashboard-actions">
+    <button class="btn btn-primary" routerLink="/provider/packages/create">
+      Create Package
+    </button>
+    <button class="btn btn-primary" routerLink="/provider/groups/create">
+      Create Group
+    </button>
+    <button class="btn btn-secondary" routerLink="/provider/subscribers/add">
+      Add Subscriber
+    </button>
+  </div>
+
+  <div class="dashboard-content">
+    <div class="section">
+      <div class="section-header">
+        <h2>My Groups</h2>
+        <div class="status-filters">
+          <button 
+            class="filter-btn" 
+            [class.active]="selectedStatus === 'ALL'"
+            (click)="filterGroups('ALL')">
+            All ({{ getGroupCount('ALL') }})
+          </button>
+          <button 
+            class="filter-btn" 
+            [class.active]="selectedStatus === 'PENDING'"
+            (click)="filterGroups('PENDING')">
+            Pending ({{ getGroupCount('PENDING') }})
+          </button>
+          <button 
+            class="filter-btn" 
+            [class.active]="selectedStatus === 'ACTIVE'"
+            (click)="filterGroups('ACTIVE')">
+            Active ({{ getGroupCount('ACTIVE') }})
+          </button>
+          <button 
+            class="filter-btn" 
+            [class.active]="selectedStatus === 'COMPLETED'"
+            (click)="filterGroups('COMPLETED')">
+            Completed ({{ getGroupCount('COMPLETED') }})
+          </button>
+          <button 
+            class="filter-btn" 
+            [class.active]="selectedStatus === 'CANCELLED'"
+            (click)="filterGroups('CANCELLED')">
+            Cancelled ({{ getGroupCount('CANCELLED') }})
+          </button>
+        </div>
+      </div>
+      
+      <div class="groups-list" *ngIf="filteredGroups.length > 0; else noGroups">
+        <div class="group-card" *ngFor="let group of filteredGroups">
+          <div class="group-info">
+            <h3>{{ group.groupName }}</h3>
+            <p>Package: {{ group.seettuPackage?.packageName }}</p>
+            <p>Members: {{ group.memberCount || 0 }}</p>
+            <p>Monthly Amount: LKR {{ group.monthlyAmount }}</p>
+            <p>Duration: {{ group.numberOfMonths }} months</p>
+            <p>Start Date: {{ group.startDate | date }}</p>
+            <p>Status: 
+              <span [class]="'status status-' + group.status?.toLowerCase()">
+                {{ getStatusDisplay(group.status) }}
+              </span>
+            </p>
+          </div>
+          <div class="group-actions">
+            <button class="btn btn-sm btn-primary" 
+                    [routerLink]="['/provider/groups', group.id]">
+              View Details
+            </button>
+            <button class="btn btn-sm btn-success" 
+                    *ngIf="group.status === 'PENDING'"
+                    (click)="startGroup(group.id)">
+              Start Group
+            </button>
+            <button class="btn btn-sm btn-danger" 
+                    *ngIf="group.status === 'PENDING' || group.status === 'ACTIVE'"
+                    (click)="cancelGroup(group.id, group.groupName)">
+              Cancel Group
+            </button>
+          </div>
+        </div>
+      </div>
+      <ng-template #noGroups>
+        <p class="no-data">No {{ selectedStatus.toLowerCase() }} groups found. 
+          <a routerLink="/provider/groups/create" *ngIf="selectedStatus === 'ALL' || selectedStatus === 'PENDING'">Create your first group</a>
+        </p>
+      </ng-template>
+    </div>
+  </div>
+</div>

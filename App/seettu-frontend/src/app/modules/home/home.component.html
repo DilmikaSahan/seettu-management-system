@@ -1,0 +1,134 @@
+<!-- navigation bar -->
+<mat-toolbar color="primary" class="home-header">
+  <span class="page-title">Seettu Potha</span>
+  <span class="spacer"></span>
+  <div class="nav-buttons">
+    <button mat-button *ngIf="!isLoggedIn" (click)="navigateToLogin()">Login</button>
+    <button mat-button *ngIf="!isLoggedIn" (click)="navigateToRegister()">Register</button>
+    <button mat-button *ngIf="isLoggedIn" (click)="navigateToDashboard()">Dashboard</button>
+    <button mat-button *ngIf="isLoggedIn" (click)="logout()">Logout</button>
+    <button mat-button (click)="navigateToAbout()">About</button>
+    <button mat-button>Contact</button>
+  </div>
+</mat-toolbar> 
+
+<!-- hero slider -->
+<app-hero-slider></app-hero-slider>
+
+<!-- Hero Section -->
+<div class="hero-section">
+  <div class="hero-content">
+    <h1 class="hero-title">Seettu Potha Goes Digital – Keep Track, Send Reminders, Stay Organized.</h1>
+    <p class="hero-description">Traditional savings, now in your hands — track progress, manage members, and never miss a cycle.</p>
+  </div>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+<div class="content-section">
+   <!-- Seettu Providers and Subscribers card -->
+ <!-- Two Cards with Vertical Line Between -->
+<div class="card-container">
+  <!-- Left Card -->
+  <div class="card-side">
+    <mat-card class="example-card" appearance="outlined">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image-left"></div>
+        <mat-card-title>For Seettu Providers</mat-card-title>
+        <mat-card-subtitle>Manage Groups</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src="i2.jpg" alt="Providers">
+      <mat-card-content>
+        <p>
+          Create and organize Seettu groups, track payments, set reminders, and reduce manual work.
+        </p>
+        <ul class="feature-list">
+          <li>✓ Create and manage unlimited Seettu packages</li>
+          <li>✓ Set up groups with flexible schedules</li>
+          <li>✓ Automated payment tracking and reminders</li>
+          <li>✓ Add subscribers with auto-generated IDs</li>
+          <li>✓ Real-time payment notifications</li>
+          <li>✓ Comprehensive group analytics</li>
+        </ul>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="showProviderDetails()">Learn More</button>
+        <button mat-raised-button color="accent" *ngIf="!isLoggedIn" (click)="navigateToRegister('PROVIDER')">Get Started</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <!-- Vertical Line -->
+  <div class="v-line"></div>
+
+  <!-- Right Card -->
+  <div class="card-side">
+    <mat-card class="example-card" appearance="outlined">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image-right"></div>
+        <mat-card-title>For Subscribers</mat-card-title>
+        <mat-card-subtitle>Stay Informed</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src="i1.jpg" alt="Subscribers">
+      <mat-card-content>
+        <p>
+          Receive reminders, track your payments, and stay updated on your Seettu contributions.
+        </p>
+        <ul class="feature-list">
+          <li>✓ View all group memberships in one place</li>
+          <li>✓ Track payment history and status</li>
+          <li>✓ Receive instant payment reminders</li>
+          <li>✓ Monitor group progress and upcoming cycles</li>
+          <li>✓ Access detailed payment analytics</li>
+          <li>✓ Get overdue payment warnings</li>
+        </ul>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="showSubscriberDetails()">Learn More</button>
+        <button mat-raised-button color="accent" *ngIf="!isLoggedIn" (click)="navigateToRegister('SUBSCRIBER')">Join Now</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- Features Section -->
+<section class="seettu-features-section">
+  <div class="container">
+    <h2>Manage your Seettus with <strong>"Seettu Potha"</strong></h2>
+    <div class="features-row">
+      <div class="feature-item">
+        <div class="icon"></div>
+        <h3>Trustworthy</h3>
+        <img src="Shake-hand_icon.png" height="30" width="35" alt="">
+        <app-counter></app-counter>
+      </div>
+      <div class="feature-item">
+        <div class="icon"></div>
+        <h3>Transparent</h3>
+        <img src="verify_icon_227246.png" height="30" width="30" alt="">
+        <app-counter></app-counter>
+      </div>
+      <div class="feature-item">
+        <div class="icon"></div>
+        <h3>Accurate</h3>
+        <img src="business_sale_growing.png" height="30" width="30" alt="">
+        <app-counter></app-counter>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Simple Footer -->
+<footer class="simple-footer">
+  <div class="footer-content">
+    <p>&copy; 2025 Seettu Potha. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="#" (click)="navigateToAbout()">About</a>
+      <a href="#" (click)="navigateToLogin()">Login</a>
+      <a href="#" (click)="navigateToRegister()">Register</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+</footer>
