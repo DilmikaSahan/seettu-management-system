@@ -40,6 +40,16 @@ import { filter, switchMap } from 'rxjs/operators';
               My Dashboard
             </a>
           </div>
+          
+          <!-- Admin Navigation -->
+          <div class="nav-section" *ngIf="userRole === 'ADMIN'">
+            <a routerLink="/admin/dashboard" routerLinkActive="active" class="nav-link">
+              🔧 Admin Dashboard
+            </a>
+            <a routerLink="/admin/users" routerLinkActive="active" class="nav-link">
+              👥 User Management
+            </a>
+          </div>
         </div>
         
         <div class="nav-actions">

@@ -1,0 +1,128 @@
+<div class="admin-dashboard">
+  <div class="dashboard-header">
+    <h1>Admin Dashboard</h1>
+    <p>Manage users and system settings</p>
+  </div>
+
+  <!-- Dashboard Statistics -->
+  <div class="stats-grid" *ngIf="dashboardStats">
+    <div class="stat-card total-users">
+      <div class="stat-icon">👥</div>
+      <div class="stat-info">
+        <h3>{{ dashboardStats.totalUsers }}</h3>
+        <p>Total Users</p>
+      </div>
+    </div>
+
+    <div class="stat-card providers">
+      <div class="stat-icon">🏢</div>
+      <div class="stat-info">
+        <h3>{{ dashboardStats.totalProviders }}</h3>
+        <p>Providers</p>
+      </div>
+    </div>
+
+    <div class="stat-card subscribers">
+      <div class="stat-icon">👤</div>
+      <div class="stat-info">
+        <h3>{{ dashboardStats.totalSubscribers }}</h3>
+        <p>Subscribers</p>
+      </div>
+    </div>
+
+    <div class="stat-card admins">
+      <div class="stat-icon">🔐</div>
+      <div class="stat-info">
+        <h3>{{ dashboardStats.totalAdmins }}</h3>
+        <p>Administrators</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="quick-actions">
+    <h2>Quick Actions</h2>
+    <div class="action-buttons">
+      <button class="action-btn primary" (click)="navigateToUserManagement()">
+        👥 Manage Users
+      </button>
+      <button class="action-btn secondary" (click)="showCreateAdminModal()">
+        ➕ Create Admin
+      </button>
+      <button class="action-btn tertiary" (click)="refreshStats()">
+        🔄 Refresh Data
+      </button>
+    </div>
+  </div>
+
+  <!-- Create Admin Modal -->
+  <div class="modal-overlay" *ngIf="showModal" (click)="closeModal()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3>➕ Create New Administrator</h3>
+        <button class="close-btn" (click)="closeModal()">✕</button>
+      </div>
+      
+      <form (ngSubmit)="createAdmin()" #adminForm="ngForm" class="modal-body">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            [(ngModel)]="newAdmin.name"
+            required
+            class="form-input"
+            placeholder="Enter administrator name">
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            [(ngModel)]="newAdmin.email"
+            required
+            class="form-input"
+            placeholder="Enter email address">
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            [(ngModel)]="newAdmin.password"
+            required
+            minlength="6"
+            class="form-input"
+            placeholder="Enter secure password">
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-cancel" (click)="closeModal()">Cancel</button>
+          <button
+            type="submit"
+            class="btn-create"
+            [disabled]="!adminForm.form.valid || isCreating">
+            {{ isCreating ? 'Creating...' : 'Create Admin' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Loading Indicator -->
+  <div class="loading" *ngIf="isLoading">
+    <div class="spinner"></div>
+    <p>Loading dashboard data...</p>
+  </div>
+
+  <!-- Error Message -->
+  <div class="error-message" *ngIf="errorMessage">
+    <p>❌ {{ errorMessage }}</p>
+    <button (click)="refreshStats()">Try Again</button>
+  </div>
+</div>

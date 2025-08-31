@@ -23,4 +23,21 @@ public interface UserRepository extends JpaRepository<User, Long> {
            "LOWER(u.phoneNumber) LIKE LOWER(CONCAT('%', :searchTerm, '%')) OR " +
            "LOWER(u.userId) LIKE LOWER(CONCAT('%', :searchTerm, '%')))")
     List<User> searchUsersByRoleAndTerm(@Param("role") Role role, @Param("searchTerm") String searchTerm);
+    
+    // Admin-specific queries
+    @Query("SELECT COUNT(u) FROM User u WHERE u.role = :role")
+    long countByRole(@Param("role") Role role);
+    
+    @Query("SELECT u FROM User u ORDER BY u.createdDate DESC")
+    List<User> findAllOrderByCreatedDateDesc();
+    
+    @Query("SELECT u FROM User u WHERE " +
+           "LOWER(u.name) LIKE LOWER(CONCAT('%', :searchTerm, '%')) OR " +
+           "LOWER(u.email) LIKE LOWER(CONCAT('%', :searchTerm, '%')) OR " +
+           "LOWER(u.phoneNumber) LIKE LOWER(CONCAT('%', :searchTerm, '%')) " +
+           "ORDER BY u.createdDate DESC")
+    List<User> searchAllUsers(@Param("searchTerm") String searchTerm);
+    
+    @Query("SELECT CASE WHEN COUNT(u) > 0 THEN true ELSE false END FROM User u WHERE u.role = 'ADMIN'")
+    boolean existsAdmin();
 }

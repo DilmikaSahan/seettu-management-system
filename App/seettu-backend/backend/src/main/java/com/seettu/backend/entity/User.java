@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "users")
 @Data
@@ -32,6 +34,9 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+    
+    @Column(name = "created_date")
+    private LocalDateTime createdDate;
 
     // Custom constructor for backward compatibility
     public User(String name, String email, String password, Role role) {
@@ -39,6 +44,7 @@ public class User {
         this.email = email;
         this.password = password;
         this.role = role;
+        this.createdDate = LocalDateTime.now();
     }
 
     // Custom method for backward compatibility

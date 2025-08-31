@@ -1,0 +1,83 @@
+<div class="user-management">
+  <div class="page-header">
+    <h1>👥 User Management</h1>
+    <p>Manage all system users and their roles</p>
+  </div>
+
+  <!-- Search and Filter Controls -->
+  <div class="controls">
+    <div class="search-section">
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        (input)="searchUsers()"
+        placeholder="Search by name, email..."
+        class="search-input">
+      
+      <select [(ngModel)]="selectedRole" (change)="filterByRole()" class="role-filter">
+        <option value="">All Roles</option>
+        <option value="ADMIN">Administrators</option>
+        <option value="PROVIDER">Providers</option>
+        <option value="SUBSCRIBER">Subscribers</option>
+      </select>
+      
+      <button (click)="clearFilters()" class="clear-btn">Clear Filters</button>
+    </div>
+    
+    <button (click)="loadUsers()" class="refresh-btn">🔄 Refresh</button>
+  </div>
+
+  <!-- Users Table -->
+  <div class="users-table-container" *ngIf="!isLoading && !errorMessage">
+    <table class="users-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Created Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of filteredUsers" class="user-row">
+          <td>{{ user.id }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td>
+            <span class="role-badge" [class]="'role-' + user.role.toLowerCase()">
+              {{ user.role }}
+            </span>
+          </td>
+          <td>{{ user.createdDate | date:'medium' }}</td>
+          <td class="actions">
+            <button 
+              (click)="deleteUser(user.id)" 
+              class="delete-btn"
+              [disabled]="isLastAdmin(user)"
+              title="Delete User">
+              Remove
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <div class="no-users" *ngIf="filteredUsers.length === 0">
+      <p>No users found matching your criteria.</p>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading" *ngIf="isLoading">
+    <div class="spinner"></div>
+    <p>Loading users...</p>
+  </div>
+
+  <!-- Error State -->
+  <div class="error-message" *ngIf="errorMessage">
+    <p>❌ {{ errorMessage }}</p>
+    <button (click)="loadUsers()">Try Again</button>
+  </div>
+</div>

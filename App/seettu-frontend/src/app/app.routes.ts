@@ -67,6 +67,14 @@ export const routes: Routes = [
     data: { expectedRole: 'SUBSCRIBER' }
   },
   
+  // Admin routes - protected by role guard
+  {
+    path: 'admin',
+    loadChildren: () => import('./modules/admin/admin-module').then(m => m.AdminModule),
+    canActivate: [RoleGuard],
+    data: { expectedRole: 'ADMIN' }
+  },
+  
   // Redirect unknown routes to home
   { path: '**', redirectTo: '' }
 ];
