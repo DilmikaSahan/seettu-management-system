@@ -11,7 +11,7 @@ public class RegisterRequest {
     private String password;
     private String role; // "PROVIDER" or "SUBSCRIBER"
 
-    public void setName(String name) {
+    public void setName(String name) {   
         this.name = name;
     }
 
@@ -22,7 +22,7 @@ public class RegisterRequest {
     public void setPassword(String password) {
         this.password = password;
     }
-
+ 
     public void setRole(String role) {
         this.role = role;
     }
