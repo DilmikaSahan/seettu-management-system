@@ -3,6 +3,7 @@ import { Home } from './modules/home/home';
 import { LoginComponent } from './modules/auth/login.component';
 import { RegisterComponent } from './modules/auth/register.component/register.component';
 import { AboutComponent } from './modules/about/about.component';
+import { Contact } from './modules/contact/contact';
 import { ProviderDashboardComponent } from './modules/provider/provider-dashboard.component';
 import { CreatePackageComponent } from './modules/provider/create-package.component';
 import { CreateGroupComponent } from './modules/provider/create-group.component';
@@ -16,6 +17,7 @@ export const routes: Routes = [
   { path: '', component: Home },
   { path: 'home', component: Home },
   { path: 'about', component: AboutComponent },
+  { path: 'contact', component: Contact },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   

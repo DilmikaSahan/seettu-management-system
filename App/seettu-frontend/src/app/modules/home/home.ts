@@ -8,7 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { HeroSlider } from '../../hero-slider/hero-slider';
-import { CounterComponent } from '../../counter.component/counter.component';
+import { Counter } from '../../counter/counter';
 
 @Component({
   selector: 'app-home',
@@ -22,7 +22,7 @@ import { CounterComponent } from '../../counter.component/counter.component';
     MatIconModule,
     MatSnackBarModule,
     HeroSlider,
-    CounterComponent
+    Counter
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
@@ -69,6 +69,10 @@ export class Home implements OnInit {
 
   navigateToAbout() {
     this.router.navigate(['/about']);
+  }
+
+  navigateToContact() {
+    this.router.navigate(['/contact']);
   }
 
   navigateToDashboard() {

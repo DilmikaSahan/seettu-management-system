@@ -8,7 +8,7 @@
     <button mat-button *ngIf="isLoggedIn" (click)="navigateToDashboard()">Dashboard</button>
     <button mat-button *ngIf="isLoggedIn" (click)="logout()">Logout</button>
     <button mat-button (click)="navigateToAbout()">About</button>
-    <button mat-button>Contact</button>
+    <button mat-button (click)="navigateToContact()">Contact</button>
   </div>
 </mat-toolbar> 
 
@@ -128,7 +128,7 @@
       <a href="#" (click)="navigateToAbout()">About</a>
       <a href="#" (click)="navigateToLogin()">Login</a>
       <a href="#" (click)="navigateToRegister()">Register</a>
-      <a href="#">Contact</a>
+      <a href="#" (click)="navigateToContact()">Contact</a>
     </div>
   </div>
 </footer>
