@@ -9,6 +9,9 @@ export interface UserSummary {
   role: string;
   createdDate: string;
   active: boolean;
+  isSuspended: boolean;
+  suspendedDate?: string;
+  suspensionReason?: string;
 }
 
 export interface AdminDashboardStats {
@@ -86,9 +89,24 @@ export class AdminService {
     });
   }
 
-  // User deletion
+  // User deletion (only for admin users)
   deleteUser(userId: number): Observable<any> {
     return this.http.delete(`${this.baseUrl}/users/${userId}`, {
+      headers: this.getHeaders()
+    });
+  }
+
+  // User suspension
+  suspendUser(userId: number, reason: string): Observable<any> {
+    return this.http.put(`${this.baseUrl}/users/${userId}/suspend`, 
+      { reason: reason }, 
+      { headers: this.getHeaders() }
+    );
+  }
+
+  // User reactivation
+  reactivateUser(userId: number): Observable<any> {
+    return this.http.put(`${this.baseUrl}/users/${userId}/reactivate`, {}, {
       headers: this.getHeaders()
     });
   }

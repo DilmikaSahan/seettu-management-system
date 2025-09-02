@@ -3,12 +3,15 @@ package com.seettu.backend.service;
 import com.seettu.backend.dto.AdminDashboardStats;
 import com.seettu.backend.dto.CreateAdminRequest;
 import com.seettu.backend.dto.UserSummaryDTO;
+import com.seettu.backend.entity.Member;
 import com.seettu.backend.entity.Role;
+import com.seettu.backend.entity.SeettuGroup;
 import com.seettu.backend.entity.User;
-import com.seettu.backend.repository.UserRepository;
+import com.seettu.backend.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,6 +26,21 @@ public class AdminService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+    
+    @Autowired
+    private NotificationRepository notificationRepository;
+    
+    @Autowired
+    private MemberRepository memberRepository;
+    
+    @Autowired
+    private GroupRepository groupRepository;
+    
+    @Autowired
+    private PaymentRepository paymentRepository;
+    
+    @Autowired
+    private SeettuPackageRepository seettuPackageRepository;
 
     /**
      * Get dashboard statistics for admin
@@ -99,9 +117,14 @@ public class AdminService {
     /**
      * Delete a user by ID
      */
+    @Transactional
     public boolean deleteUser(Long userId) {
-        Optional<User> userOptional = userRepository.findById(userId);
-        if (userOptional.isPresent()) {
+        try {
+            Optional<User> userOptional = userRepository.findById(userId);
+            if (userOptional.isEmpty()) {
+                return false;
+            }
+            
             User user = userOptional.get();
             
             // Prevent deleting the last admin
@@ -111,11 +134,144 @@ public class AdminService {
                     throw new IllegalStateException("Cannot delete the last admin user");
                 }
             }
+
+            // Delete related records in proper order to handle foreign key constraints
             
+            // 1. Delete all notifications for this user
+            notificationRepository.deleteByUserId(userId);
+            
+            // 2. Get all members for this user and delete their payments first
+            List<Member> userMembers = memberRepository.findByUserId(userId);
+            for (Member member : userMembers) {
+                // Delete all payments for this member
+                paymentRepository.deleteByMemberId(member.getId());
+            }
+            
+            // 3. Now delete all members where this user is a member
+            memberRepository.deleteByUserId(userId);
+            
+            // 4. For groups where this user is the provider, we need to handle differently
+            // Check if user is a provider of any groups
+            List<SeettuGroup> providedGroups = groupRepository.findByProviderId(userId);
+            if (!providedGroups.isEmpty()) {
+                // For now, we'll prevent deletion if user is a provider
+                // In production, you might want to reassign groups or handle differently
+                throw new RuntimeException("Cannot delete user who is providing active groups. Please reassign or close groups first.");
+            }
+            
+            // 5. Delete any payments made by this user (if they're a provider)
+            paymentRepository.deleteByPaidByProviderId(userId);
+            
+            // 6. Delete any packages created by this user (if they're a provider)
+            seettuPackageRepository.deleteByProviderId(userId);
+            
+            // 7. Finally delete the user
             userRepository.delete(user);
             return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
-        return false;
+    }
+
+    /**
+     * Suspend a user by ID
+     */
+    @Transactional
+    public boolean suspendUser(Long userId, String reason) {
+        try {
+            Optional<User> userOptional = userRepository.findById(userId);
+            if (userOptional.isEmpty()) {
+                return false;
+            }
+            
+            User user = userOptional.get();
+            
+            // Prevent suspending admin users
+            if (user.getRole() == Role.ADMIN) {
+                throw new IllegalStateException("Cannot suspend admin users");
+            }
+            
+            // Check if already suspended
+            if (user.getIsSuspended() != null && user.getIsSuspended()) {
+                throw new IllegalStateException("User is already suspended");
+            }
+            
+            // Suspend the user
+            user.setIsSuspended(true);
+            user.setSuspendedDate(LocalDateTime.now());
+            user.setSuspensionReason(reason != null ? reason : "No reason provided");
+            
+            userRepository.save(user);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * Reactivate a suspended user
+     */
+    @Transactional
+    public boolean reactivateUser(Long userId) {
+        try {
+            Optional<User> userOptional = userRepository.findById(userId);
+            if (userOptional.isEmpty()) {
+                return false;
+            }
+            
+            User user = userOptional.get();
+            
+            // Check if user is suspended
+            if (user.getIsSuspended() == null || !user.getIsSuspended()) {
+                throw new IllegalStateException("User is not suspended");
+            }
+            
+            // Reactivate the user
+            user.setIsSuspended(false);
+            user.setSuspendedDate(null);
+            user.setSuspensionReason(null);
+            
+            userRepository.save(user);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * Delete a user by ID (only for admin users)
+     */
+    @Transactional
+    public boolean deleteAdminUser(Long userId) {
+        try {
+            Optional<User> userOptional = userRepository.findById(userId);
+            if (userOptional.isEmpty()) {
+                return false;
+            }
+            
+            User user = userOptional.get();
+            
+            // Only allow deletion for admin users
+            if (user.getRole() != Role.ADMIN) {
+                throw new IllegalStateException("Only admin users can be deleted. Use suspension for other users.");
+            }
+            
+            // Prevent deleting the last admin
+            long adminCount = userRepository.countByRole(Role.ADMIN);
+            if (adminCount <= 1) {
+                throw new IllegalStateException("Cannot delete the last admin user");
+            }
+
+            // Delete the admin user (no foreign key constraints)
+            userRepository.delete(user);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     /**

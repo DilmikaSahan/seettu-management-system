@@ -37,6 +37,15 @@ public class User {
     
     @Column(name = "created_date")
     private LocalDateTime createdDate;
+    
+    @Column(name = "is_suspended")
+    private Boolean isSuspended = false;
+    
+    @Column(name = "suspended_date")
+    private LocalDateTime suspendedDate;
+    
+    @Column(name = "suspension_reason")
+    private String suspensionReason;
 
     // Custom constructor for backward compatibility
     public User(String name, String email, String password, Role role) {

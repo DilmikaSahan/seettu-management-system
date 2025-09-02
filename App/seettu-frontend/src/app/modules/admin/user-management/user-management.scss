@@ -241,6 +241,70 @@
     }
   }
 
+  // Suspension-related styles
+  .user-row {
+    &.suspended {
+      background-color: #ffeaa7;
+      opacity: 0.8;
+    }
+  }
+
+  .status-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+
+    &.status-active {
+      background: #27ae60;
+      color: white;
+    }
+
+    &.status-suspended {
+      background: #e74c3c;
+      color: white;
+    }
+  }
+
+  .suspension-reason {
+    font-size: 0.7rem;
+    color: #666;
+    margin-top: 0.25rem;
+    font-style: italic;
+  }
+
+  .suspend-btn {
+    padding: 0.5rem 1rem;
+    background: #f39c12;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: background 0.3s ease;
+
+    &:hover {
+      background: #e67e22;
+    }
+  }
+
+  .reactivate-btn {
+    padding: 0.5rem 1rem;
+    background: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: background 0.3s ease;
+
+    &:hover {
+      background: #229954;
+    }
+  }
+
   @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }

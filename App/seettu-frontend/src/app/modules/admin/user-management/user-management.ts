@@ -76,14 +76,68 @@ export class UserManagement implements OnInit {
   }
 
   deleteUser(userId: number) {
-    if (confirm('Are you sure you want to delete this user?')) {
-      this.adminService.deleteUser(userId).subscribe({
+    const user = this.users.find(u => u.id === userId);
+    if (!user) return;
+
+    if (user.role === 'ADMIN') {
+      // Only allow deletion for admin users
+      if (confirm('Are you sure you want to delete this admin user? This action cannot be undone.')) {
+        this.adminService.deleteUser(userId).subscribe({
+          next: () => {
+            this.loadUsers(); // Refresh the list
+          },
+          error: (error) => {
+            console.error('Error deleting user:', error);
+            this.errorMessage = error.error?.error || 'Failed to delete user';
+          }
+        });
+      }
+    } else {
+      // For non-admin users, offer suspension
+      this.suspendUser(userId);
+    }
+  }
+
+  suspendUser(userId: number) {
+    const user = this.users.find(u => u.id === userId);
+    if (!user) return;
+
+    if (user.isSuspended) {
+      this.errorMessage = 'User is already suspended';
+      return;
+    }
+
+    const reason = prompt('Enter reason for suspension (optional):') || 'No reason provided';
+    if (confirm(`Are you sure you want to suspend user "${user.name}"?`)) {
+      this.adminService.suspendUser(userId, reason).subscribe({
         next: () => {
           this.loadUsers(); // Refresh the list
         },
         error: (error) => {
-          console.error('Error deleting user:', error);
-          this.errorMessage = error.error?.error || 'Failed to delete user';
+          console.error('Error suspending user:', error);
+          this.errorMessage = error.error?.error || 'Failed to suspend user';
+        }
+      });
+    }
+  }
+
+  reactivateUser(userId: number) {
+    const user = this.users.find(u => u.id === userId);
+    if (!user) return;
+
+    if (!user.isSuspended) {
+      this.errorMessage = 'User is not suspended';
+      return;
+    }
+
+    if (confirm(`Are you sure you want to reactivate user "${user.name}"?`)) {
+      this.adminService.reactivateUser(userId).subscribe({
+        next: () => {
+          this.loadUsers(); // Refresh the list
+        },
+        error: (error) => {
+          console.error('Error reactivating user:', error);
+          this.errorMessage = error.error?.error || 'Failed to reactivate user';
         }
       });
     }

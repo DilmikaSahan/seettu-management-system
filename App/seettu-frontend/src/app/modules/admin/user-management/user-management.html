@@ -36,12 +36,13 @@
           <th>Name</th>
           <th>Email</th>
           <th>Role</th>
+          <th>Status</th>
           <th>Created Date</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let user of filteredUsers" class="user-row">
+        <tr *ngFor="let user of filteredUsers" class="user-row" [class.suspended]="user.isSuspended">
           <td>{{ user.id }}</td>
           <td>{{ user.name }}</td>
           <td>{{ user.email }}</td>
@@ -50,15 +51,44 @@
               {{ user.role }}
             </span>
           </td>
+          <td>
+            <span class="status-badge" [class]="user.isSuspended ? 'status-suspended' : 'status-active'">
+              {{ user.isSuspended ? 'Suspended' : 'Active' }}
+            </span>
+            <div *ngIf="user.isSuspended && user.suspensionReason" class="suspension-reason">
+              Reason: {{ user.suspensionReason }}
+            </div>
+          </td>
           <td>{{ user.createdDate | date:'medium' }}</td>
           <td class="actions">
-            <button 
-              (click)="deleteUser(user.id)" 
-              class="delete-btn"
-              [disabled]="isLastAdmin(user)"
-              title="Delete User">
-              Remove
-            </button>
+            <!-- Actions for Admin users -->
+            <ng-container *ngIf="user.role === 'ADMIN'">
+              <button 
+                (click)="deleteUser(user.id)" 
+                class="delete-btn"
+                [disabled]="isLastAdmin(user)"
+                title="Delete Admin User">
+                Delete
+              </button>
+            </ng-container>
+            
+            <!-- Actions for non-Admin users -->
+            <ng-container *ngIf="user.role !== 'ADMIN'">
+              <button 
+                *ngIf="!user.isSuspended"
+                (click)="suspendUser(user.id)" 
+                class="suspend-btn"
+                title="Suspend User">
+                Suspend
+              </button>
+              <button 
+                *ngIf="user.isSuspended"
+                (click)="reactivateUser(user.id)" 
+                class="reactivate-btn"
+                title="Reactivate User">
+                Reactivate
+              </button>
+            </ng-container>
           </td>
         </tr>
       </tbody>

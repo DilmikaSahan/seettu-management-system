@@ -17,6 +17,9 @@ public class UserSummaryDTO {
     private String role;
     private LocalDateTime createdDate;
     private Boolean active;
+    private Boolean isSuspended;
+    private LocalDateTime suspendedDate;
+    private String suspensionReason;
     
     // Constructor from User entity
     public UserSummaryDTO(User user) {
@@ -25,7 +28,10 @@ public class UserSummaryDTO {
         this.email = user.getEmail();
         this.role = user.getRole().name();
         this.createdDate = user.getCreatedDate();
-        this.active = true; // Default to true, can be extended later
+        this.isSuspended = user.getIsSuspended() != null ? user.getIsSuspended() : false;
+        this.active = !this.isSuspended; // Active if not suspended
+        this.suspendedDate = user.getSuspendedDate();
+        this.suspensionReason = user.getSuspensionReason();
     }
     
     // Default constructor

@@ -43,6 +43,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             var userDetails = userService.loadUserByUsername(username);
             if (jwtUtils.validateToken(jwt, userDetails)) {
+                // Check if user is suspended
+                try {
+                    var user = userService.getUserByEmail(username);
+                    if (user != null && user.getIsSuspended() != null && user.getIsSuspended()) {
+                        // User is suspended, return unauthorized
+                        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                        response.setContentType("application/json");
+                        response.getWriter().write("{\"error\":\"Account suspended\",\"message\":\"Your account has been suspended. Contact administrator.\"}");
+                        return;
+                    }
+                } catch (Exception e) {
+                    // If user not found, continue with normal flow
+                }
+                
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
 
