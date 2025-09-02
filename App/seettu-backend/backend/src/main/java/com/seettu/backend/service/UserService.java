@@ -4,6 +4,7 @@ import com.seettu.backend.dto.AddSubscriberRequest;
 import com.seettu.backend.entity.Role;
 import com.seettu.backend.entity.User;
 import com.seettu.backend.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,6 +18,9 @@ public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    
+    @Autowired
+    private SmsService smsService;
 
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
@@ -51,7 +55,19 @@ public class UserService implements UserDetailsService {
         // Auto-generate unique userId
         subscriber.setUserId(generateUniqueUserId());
 
-        return userRepository.save(subscriber);
+        User savedSubscriber = userRepository.save(subscriber);
+        
+        // Send welcome SMS to new subscriber
+        if (savedSubscriber.getPhoneNumber() != null && !savedSubscriber.getPhoneNumber().isEmpty()) {
+            try {
+                smsService.sendWelcomeSms(savedSubscriber.getPhoneNumber(), savedSubscriber.getName());
+            } catch (Exception e) {
+                // Log error but don't fail subscriber creation if SMS fails
+                System.err.println("Failed to send welcome SMS to new subscriber: " + e.getMessage());
+            }
+        }
+
+        return savedSubscriber;
     }
     
     private String generateUniqueUserId() {

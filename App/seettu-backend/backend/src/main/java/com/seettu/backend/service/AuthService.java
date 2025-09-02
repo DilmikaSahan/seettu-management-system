@@ -30,6 +30,9 @@ public class AuthService {
     
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private SmsService smsService;
 
     @Transactional
     public AuthResponse register(RegisterRequest request) {
@@ -40,10 +43,21 @@ public class AuthService {
         User user = new User();
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setName(request.getName()); // Changed from setFullName to setName
+        user.setName(request.getName());
+        user.setPhoneNumber(request.getPhoneNumber());
         user.setRole(Role.valueOf(request.getRole().toUpperCase()));
 
-        userRepository.save(user);
+        User savedUser = userRepository.save(user);
+
+        // Send welcome SMS if phone number is provided
+        if (savedUser.getPhoneNumber() != null && !savedUser.getPhoneNumber().isEmpty()) {
+            try {
+                smsService.sendWelcomeSms(savedUser.getPhoneNumber(), savedUser.getName());
+            } catch (Exception e) {
+                // Log error but don't fail registration if SMS fails
+                System.err.println("Failed to send welcome SMS: " + e.getMessage());
+            }
+        }
 
         // Create UserDetails for JWT generation
         UserDetails userDetails = userService.loadUserByUsername(user.getEmail());

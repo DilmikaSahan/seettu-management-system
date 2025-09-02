@@ -18,6 +18,7 @@ export class RegisterComponent implements OnInit {
   registerData = {
     name: '',
     email: '',
+    phoneNumber: '',
     password: '',
     role: 'PROVIDER'
   };

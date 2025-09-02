@@ -36,6 +36,9 @@ public class SeettuService {
     
     @Autowired
     private NotificationService notificationService;
+    
+    @Autowired
+    private SmsService smsService;
 
     public List<SeettuGroup> getAllGroups() {
         return groupRepository.findAll();
@@ -127,6 +130,21 @@ public class SeettuService {
         // Create payment records for all months
         createPaymentRecords(savedGroup, members);
 
+        // Send SMS notification to provider about group creation
+        if (provider.getPhoneNumber() != null && !provider.getPhoneNumber().isEmpty()) {
+            try {
+                smsService.sendGroupCreatedSms(
+                    provider.getPhoneNumber(), 
+                    savedGroup.getGroupName(), 
+                    savedGroup.getMonthlyAmount(), 
+                    provider.getName()
+                );
+            } catch (Exception e) {
+                // Log error but don't fail group creation if SMS fails
+                System.err.println("Failed to send group creation SMS to provider: " + e.getMessage());
+            }
+        }
+
         return savedGroup;
     }
 
@@ -166,6 +184,24 @@ public class SeettuService {
 
         // Send notifications to all members
         notificationService.createGroupStartedNotification(group);
+        
+        // Send SMS notifications to all members
+        List<Member> members = memberRepository.findByGroup(group);
+        for (Member member : members) {
+            if (member.getUser().getPhoneNumber() != null && !member.getUser().getPhoneNumber().isEmpty()) {
+                try {
+                    smsService.sendGroupStartNotificationSms(
+                        member.getUser().getPhoneNumber(),
+                        group.getGroupName(),
+                        group.getMonthlyAmount(),
+                        member.getUser().getName()
+                    );
+                } catch (Exception e) {
+                    // Log error but don't fail group start if SMS fails
+                    System.err.println("Failed to send group start SMS to member " + member.getUser().getEmail() + ": " + e.getMessage());
+                }
+            }
+        }
     }
 
     @Transactional
@@ -181,13 +217,76 @@ public class SeettuService {
         payment.setPaidAt(LocalDateTime.now());
         payment.setPaidByProvider(provider);
         
-        paymentRepository.save(payment);
-
-        // Send notification and SMS
-        notificationService.createPaymentReceivedNotification(payment);
+        Payment savedPayment = paymentRepository.save(payment);
         
-        // Check if group should be completed
+        // Send SMS confirmation to the member
+        User member = savedPayment.getMember().getUser();
+        if (member.getPhoneNumber() != null && !member.getPhoneNumber().isEmpty()) {
+            try {
+                String monthName = savedPayment.getGroup().getStartDate()
+                    .plusMonths(savedPayment.getMonthNumber() - 1)
+                    .getMonth().toString();
+                
+                smsService.sendPaymentReceivedSms(
+                    member.getPhoneNumber(),
+                    savedPayment.getGroup().getGroupName(),
+                    savedPayment.getGroup().getMonthlyAmount(),
+                    monthName,
+                    member.getName()
+                );
+            } catch (Exception e) {
+                // Log error but don't fail payment marking if SMS fails
+                System.err.println("Failed to send payment confirmation SMS to member " + member.getEmail() + ": " + e.getMessage());
+            }
+        }
+
+        // Check if this payment triggers a payout
+        checkForPayout(savedPayment);
+
+        // Check if all payments are made to complete the group
         checkAndCompleteGroup(payment.getGroup().getId());
+    }
+    
+    private void checkForPayout(Payment payment) {
+        int monthNumber = payment.getMonthNumber();
+        SeettuGroup group = payment.getGroup();
+        
+        // Find who should receive the payout this month
+        List<Member> members = memberRepository.findByGroup(group);
+        Member payoutRecipient = members.stream()
+            .filter(member -> member.getOrderNumber() == monthNumber)
+            .findFirst()
+            .orElse(null);
+            
+        if (payoutRecipient != null) {
+            // Check if all members have paid for this month
+            boolean allPaidForMonth = true;
+            for (Member member : members) {
+                Payment memberPayment = paymentRepository.findByMemberAndMonthNumber(member, monthNumber).orElse(null);
+                if (memberPayment == null || !memberPayment.getIsPaid()) {
+                    allPaidForMonth = false;
+                    break;
+                }
+            }
+            
+            if (allPaidForMonth) {
+                // Send payout notification SMS
+                User recipient = payoutRecipient.getUser();
+                if (recipient.getPhoneNumber() != null && !recipient.getPhoneNumber().isEmpty()) {
+                    try {
+                        double payoutAmount = group.getMonthlyAmount() * members.size();
+                        smsService.sendPayoutNotificationSms(
+                            recipient.getPhoneNumber(),
+                            group.getGroupName(),
+                            payoutAmount,
+                            recipient.getName()
+                        );
+                    } catch (Exception e) {
+                        System.err.println("Failed to send payout notification SMS: " + e.getMessage());
+                    }
+                }
+            }
+        }
     }
 
     public GroupDetailsResponse getGroupDetails(Long groupId) {
