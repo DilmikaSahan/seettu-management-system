@@ -7,6 +7,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { HeroSlider } from '../../hero-slider/hero-slider';
 import { Counter } from '../../counter/counter';
 
@@ -21,6 +23,8 @@ import { Counter } from '../../counter/counter';
     MatButtonModule, 
     MatIconModule,
     MatSnackBarModule,
+    MatFormFieldModule,
+    MatInputModule,
     HeroSlider,
     Counter
   ],
@@ -96,5 +100,30 @@ export class Home implements OnInit {
   showSubscriberDetails() {
     // Navigate to About page instead of showing snackbar
     this.router.navigate(['/about']);
+  }
+
+  // Additional navigation methods for detailed footer
+  navigateToHome() {
+    this.router.navigate(['/']);
+  }
+
+  navigateToProvider() {
+    this.router.navigate(['/provider']);
+  }
+
+  navigateToSubscriber() {
+    this.router.navigate(['/subscriber']);
+  }
+
+  navigateToAdmin() {
+    this.router.navigate(['/admin']);
+  }
+
+  navigateToSMS() {
+    this.router.navigate(['/sms']);
+  }
+
+  navigateToReports() {
+    this.router.navigate(['/reports']);
   }
 }

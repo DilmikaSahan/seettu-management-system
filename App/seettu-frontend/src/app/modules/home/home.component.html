@@ -120,15 +120,133 @@
   </div>
 </section>
 
-<!-- Simple Footer -->
-<footer class="simple-footer">
-  <div class="footer-content">
-    <p>&copy; 2025 Seettu Potha. All rights reserved.</p>
-    <div class="footer-links">
-      <a href="#" (click)="navigateToAbout()">About</a>
-      <a href="#" (click)="navigateToLogin()">Login</a>
-      <a href="#" (click)="navigateToRegister()">Register</a>
-      <a href="#" (click)="navigateToContact()">Contact</a>
+<!-- Detailed Footer -->
+<footer class="detailed-footer">
+  <div class="footer-main">
+    <div class="footer-container">
+      <!-- Company Information Section -->
+      <div class="footer-section">
+        <h3>Seettu Potha</h3>
+        <p class="company-description">
+          Your trusted partner for comprehensive management solutions. We provide innovative digital platforms 
+          to streamline your business operations and enhance productivity.
+        </p>
+        <div class="company-stats">
+          <div class="stat-item">
+            <strong>500+</strong>
+            <span>Happy Clients</span>
+          </div>
+          <div class="stat-item">
+            <strong>10k+</strong>
+            <span>Transactions</span>
+          </div>
+          <div class="stat-item">
+            <strong>24/7</strong>
+            <span>Support</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Links Section -->
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="#" (click)="navigateToHome()">Home</a></li>
+          <li><a href="#" (click)="navigateToAbout()">About Us</a></li>
+          <li><a href="#" (click)="navigateToContact()">Contact</a></li>
+          <li><a href="#" (click)="navigateToLogin()">Login</a></li>
+          <li><a href="#" (click)="navigateToRegister()">Register</a></li>
+        </ul>
+      </div>
+
+      <!-- Services Section -->
+      <div class="footer-section">
+        <h4>Our Services</h4>
+        <ul class="footer-links">
+          <li><a href="#" (click)="navigateToProvider()">Provider Management</a></li>
+          <li><a href="#" (click)="navigateToSubscriber()">Subscriber Services</a></li>
+          <li><a href="#" (click)="navigateToSMS()">SMS Notifications</a></li>
+          <li><a href="#" (click)="navigateToReports()">Reports & Analytics</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact Information Section -->
+      <div class="footer-section">
+        <h4>Contact Info</h4>
+        <div class="contact-info">
+          <div class="contact-item">
+            <mat-icon>location_on</mat-icon>
+            <span> University of Sri Jayewardenepura,<br>Faculty of Technology,<br>Pitipana,Homagama, Sri Lanka</span>
+          </div>
+          <div class="contact-item">
+            <mat-icon>phone</mat-icon>
+            <span>+19302031287</span>
+          </div>
+          <div class="contact-item">
+            <mat-icon>email</mat-icon>
+            <span>info&#64;seettupotha.com</span>
+          </div>
+          <div class="contact-item">
+            <mat-icon>schedule</mat-icon>
+            <span>Mon - Fri: 9:00 AM - 6:00 PM</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Social Media & Newsletter Section -->
+      <div class="footer-section">
+        <h4>Stay Connected</h4>
+        <div class="social-links">
+          <a href="#" class="social-link facebook" title="Facebook">
+            <mat-icon>facebook</mat-icon>
+          </a>
+          <a href="#" class="social-link twitter" title="Twitter">
+            <mat-icon>message</mat-icon>
+          </a>
+          <a href="#" class="social-link linkedin" title="LinkedIn">
+            <mat-icon>business</mat-icon>
+          </a>
+          <a href="#" class="social-link instagram" title="Instagram">
+            <mat-icon>camera_alt</mat-icon>
+          </a>
+        </div>
+        
+        <div class="newsletter">
+          <h5>Newsletter</h5>
+          <p>Subscribe to get updates on our latest features and services.</p>
+          <div class="newsletter-form">
+            <mat-form-field appearance="outline" class="newsletter-input">
+              <input matInput placeholder="Enter your email" type="email">
+            </mat-form-field>
+            <button mat-raised-button color="primary" class="subscribe-btn">
+              <mat-icon>send</mat-icon>
+              Subscribe
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Bottom -->
+  <div class="footer-bottom">
+    <div class="footer-container">
+      <div class="footer-bottom-content">
+        <div class="copyright">
+          <p>&copy; 2025 Seettu Potha. All rights reserved.</p>
+        </div>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Cookie Policy</a>
+          <a href="#">Sitemap</a>
+        </div>
+        <div class="footer-badges">
+          <span class="badge">Secure</span>
+          <span class="badge">Trusted</span>
+          <span class="badge">24/7 Support</span>
+        </div>
+      </div>
     </div>
   </div>
 </footer>
